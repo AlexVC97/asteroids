@@ -4,6 +4,8 @@ import pygame
 # Importing my own files
 from constants import *
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 # Functions
 def main():
@@ -14,7 +16,10 @@ def main():
     # Creating groups
     updateable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
     Player.containers = (updateable, drawable)
+    Asteroid.containers = (asteroids, updateable, drawable)
+    AsteroidField.containers = updateable
     
     # Represent the middle of the screen
     x = SCREEN_WIDTH / 2
@@ -25,6 +30,9 @@ def main():
     
     # Delta time
     dt = 0
+    
+    # Instantiate AsteroidField object
+    asteroid_field = AsteroidField()
 
     while True:
         for event in pygame.event.get():
