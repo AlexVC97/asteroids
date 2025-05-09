@@ -10,7 +10,11 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
-    dt = 0
+    
+    # Creating groups
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updateable, drawable)
     
     # Represent the middle of the screen
     x = SCREEN_WIDTH / 2
@@ -18,6 +22,9 @@ def main():
     
     # Instantiate Player object
     player = Player(x, y)
+    
+    # Delta time
+    dt = 0
 
     while True:
         for event in pygame.event.get():
@@ -26,15 +33,15 @@ def main():
             
         screen.fill("black")
         
-        player.draw(screen)
-        player.update(dt)
+        updateable.update(dt)
+        
+        for obj in drawable:
+            obj.draw(screen)
         
         pygame.display.flip()
         
         # Limit the framerate to 60 FPS
         dt = clock.tick(60) / 1000
-
-
 
 
 # Program starts here
